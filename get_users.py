@@ -1,6 +1,7 @@
 from getpass import getpass
 import os
 from openpyxl import load_workbook, Workbook
+from tkinter import messagebox
 
 valid_user = False
 
@@ -18,6 +19,9 @@ def check_user(user, valid_user):
     if valid_user != True:
         pw = None
         print("     Username not in database. Please try again.")
+        messagebox.showinfo(
+            "Incorrect Username", "The username you entered is not in our database"
+        )
 
     return valid_user, pw
 
@@ -41,3 +45,11 @@ def create_user():
     print("\nAcount successfully created!\n")
     return username
 
+
+def create_user(username, password):
+    wb = load_workbook("database.xlsx")
+    ws = wb.active
+    ws.append([username, password])
+    wb.save("database.xlsx")
+    print("\nAcount successfully created!\n")
+    return username
